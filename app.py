@@ -15,8 +15,8 @@ st.set_page_config(
     layout="centered"
 )
 
-st.title("📚 Personal Knowledge Assistant")
-st.caption("Upload a PDF and ask questions about it.")
+st.title("📚 Prasad's Personal PDF Chat Assistant")
+st.caption("Upload a PDF and puchho jo puchna hai.")
 
 
 # -------------------------------------------------------
@@ -32,10 +32,15 @@ with st.sidebar:
     )
 
     prompt_mode = st.selectbox(
-        "Answer style",
-        options=["default", "concise", "analyst"],
-        help="Controls how the answer is structured"
-    )
+    "Answer style",
+    options=["default", "concise", "analyst", "german_tutor"],
+    format_func=lambda x: {
+        "default": "Default",
+        "concise": "Concise",
+        "analyst": "Analyst",
+        "german_tutor": "🇩🇪 German Tutie for Cutie"   # nicer label in the dropdown
+    }[x]
+)
 
     process_btn = st.button("Process PDF", type="primary")
 
@@ -53,7 +58,7 @@ if process_btn and uploaded_file:
         tmp.write(uploaded_file.read())
         tmp_path = tmp.name   # something like C:/Users/.../tmp12345.pdf
 
-    with st.spinner("Reading and chunking PDF..."):
+    with st.spinner("Reading and chunking PDF... bole to tukda tukda"):
         pages = load_pdf(tmp_path)
         chunks = split_into_chunks(pages)
 
@@ -61,7 +66,7 @@ if process_btn and uploaded_file:
         vectorstore = create_vectorstore(chunks)
         st.session_state.vectorstore = vectorstore
 
-    with st.spinner("Building RAG chain..."):
+    with st.spinner("Building RAG chain... and someday.. a GOLD chain"):
         st.session_state.chain = build_rag_chain(vectorstore, prompt_mode)
         st.session_state.prompt_mode = prompt_mode
         st.session_state.chat_history = []   # reset chat on new PDF
@@ -141,4 +146,4 @@ if question:
 # Empty state — shown before any PDF is uploaded
 # -------------------------------------------------------
 if "chain" not in st.session_state and not uploaded_file:
-    st.info("👈 Idhar pdf upload kar chal chaman.")
+    st.info("👈 Idhar pdf upload karo nahi to mummy maaregi.")
