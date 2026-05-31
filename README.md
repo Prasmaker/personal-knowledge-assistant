@@ -29,8 +29,8 @@ Built with LangChain, Groq (LLaMA 3.3), ChromaDB, and Streamlit.
    streamlit run app.py
 
 ## Project Structure
-- ingest.py       — PDF loading and chunking
-- vectorstore.py  — Embeddings and vector storage
-- rag_chain.py    — RAG pipeline
-- prompts.py      — Prompt engineering templates
-- app.py          — Streamlit UI
+- ingest.py       for PDF loading and chunking
+- vectorstore.py  provides Embeddings and vector storage
+- rag_chain.py    the RAG pipeline
+- prompts.py      a separate file for Prompt engineering templates
+- app.py          uses Streamlit UI as app front-end
